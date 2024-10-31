@@ -42,16 +42,16 @@
                         </div>
                         @endif
                         <!-- form start -->
-                        <form id="quickForm" method="post" action="{{route('category.store')}}">
+                        <form id="quickForm" method="post" action="{{ route('category.update',$cat->id) }}">
                             @csrf
                             <div class="card-body">
                                 <div class="form-group">
                                     <label for="name">Category Name</label>
-                                    <input type="text" name="name" class="form-control" placeholder="Enter Writer Name">
+                                    <input type="text" name="name" value="{{$cat->name ? $cat->name : old('name') }}" class="form-control" placeholder="Enter Writer Name">
                                 </div>
                                 <div class="form-group">
                                     <label for="description">Description</label>
-                                    <textarea name="description" class="form-control"></textarea>
+                                    <textarea name="description" class="form-control">{{$cat->short_description ? $cat->short_description : old('description') }}</textarea>
                                 </div>
                             </div>
                             <!-- /.card-body -->

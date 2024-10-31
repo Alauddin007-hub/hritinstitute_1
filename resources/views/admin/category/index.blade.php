@@ -36,11 +36,11 @@
                             </div>
                         </div>
 
-                        <!-- @if(session('success'))
+                        @if(session('success'))
                         <div class="alert alert-success">
                             {{ session('success') }}
                         </div>
-                        @endif -->
+                        @endif
                         <!-- /.card-header -->
                         <div class="card-body">
                             <table class="table table-bordered table-striped">
@@ -53,7 +53,18 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    
+                                @foreach ( $category as $key=>$item )
+                                    <tr>
+                                        <td>{{++$key}}</td>
+                                        <td>{{$item->name}}</td>
+                                        <td>{{$item->short_description}}</td>
+                                        <td>
+                                            <a class="btn btn-secondary" href="{{route('category.edit', $item->id)}}"><i class="fa-solid fa-pen-to-square"></i>edit</a>
+
+                                            <a class="btn btn-danger" href="{{route('category.delete', $item->id)}}" onclick="return confirm('Are you sure to delete')"><i class="fa-solid fa-trash">delete</i></a>
+                                        </td>
+                                    </tr>
+                                    @endforeach
 
                                 </tbody>
                             </table>
