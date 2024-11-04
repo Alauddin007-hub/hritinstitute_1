@@ -26,10 +26,10 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->text('description')->nullable();
-            $table->json('images'); 
+            $table->json('images'); // Stores multiple image URLs as JSON
             $table->decimal('price', 10, 2);
             $table->integer('quantity');
-            $table->foreignId('vendor_id')->constrained('vendors')->onDelete('cascade');
+            // $table->foreignId('vendor_id')->constrained('vendors')->onDelete('cascade');
             $table->timestamps();
         });
     }

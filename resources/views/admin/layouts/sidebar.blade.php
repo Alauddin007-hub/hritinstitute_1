@@ -102,13 +102,13 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{route('category')}}" class="nav-link">
+                            <a href="{{route('product')}}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Product List</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{route('category.create')}}" class="nav-link">
+                            <a href="{{route('product.create')}}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Add Product</p>
                                 <!-- <span class="right badge badge-danger">New</span> -->

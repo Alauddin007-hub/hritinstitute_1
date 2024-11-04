@@ -42,12 +42,12 @@
                         </div>
                         @endif
                         <!-- form start -->
-                        <form id="quickForm" method="post" action="{{route('category.store')}}">
+                        <form method="post" action="{{route('category.store')}}" enctype="multipart/form-data">
                             @csrf
                             <div class="card-body">
                                 <div class="form-group">
                                     <label for="name">Category Name</label>
-                                    <input type="text" name="name" class="form-control" placeholder="Enter Writer Name">
+                                    <input type="text" name="name" class="form-control" placeholder="Enter category Name">
                                 </div>
                                 <div class="form-group">
                                     <label for="description">Description</label>

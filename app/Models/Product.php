@@ -11,7 +11,7 @@ class Product extends Model
     ];
 
     protected $casts = [
-        'images' => 'array', 
+        'images' => 'array', // Enables storage and retrieval as an array
     ];
 
 
