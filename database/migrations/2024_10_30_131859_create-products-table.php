@@ -22,18 +22,15 @@ return new class extends Migration
 
     public function up(): void
     {
-         Schema::create('products', function (Blueprint $table) {
+        Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('description')->nullable();
-            $table->foreignId('category_id')->constrained('categories');
-
-            // $table->foreignIdFor(vendor::class)->constrained();
-            $table->string('image')->nullable();
-            $table->decimal('price', 8,2);
+            $table->text('description')->nullable();
+            $table->json('images'); 
+            $table->decimal('price', 10, 2);
             $table->integer('quantity');
-            $table->timestamp('created_at')->useCurrent();
-            $table->timestamp('updated_at')->useCurrent();
+            $table->foreignId('vendor_id')->constrained('vendors')->onDelete('cascade');
+            $table->timestamps();
         });
     }
 
