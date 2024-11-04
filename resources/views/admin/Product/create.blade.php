@@ -64,9 +64,12 @@
                                 <div class="form-group">
                                     <label for="name">Category</label>
                                     <select name="category_id" class="form-control">
+                                        
                                         <option value="selected">Chosse once</option>
-                                        <option value="">One</option>
-                                        <option value="">Two</option>
+                                        @foreach ($cats as $cat)
+                                        <option value="{{$cat->id}}" {{ old('category_id') == $cat->id ? 'selected' : '' }}>{{$cat->name}}</option>
+                                        @endforeach
+
                                     </select>
                                 </div>
                                 <div class="form-group">
