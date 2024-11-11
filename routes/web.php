@@ -47,14 +47,8 @@ Route::get('/product/edit/{id}', [ProductController::class, 'edit'])->name('prod
 Route::post('/product/update/{id}', [ProductController::class, 'update'])->name('product.update');
 Route::get('/product/{id}', [ProductController::class, 'destroy'])->name('product.delete');
 
+Route::middleware(['Admin'])->group(function () {
+
+});
 
 
-// Route::get('/categories', function () {
-//     return view('admin.category.index');
-// });
-// Route::get('/category/create', function () {
-//     return view('admin.category.create');
-// })->name('category.create');
-// Route::get('/category/store', function () {
-//     return view('admin.category.create');
-// })->name('category.store');
