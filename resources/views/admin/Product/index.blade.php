@@ -47,8 +47,9 @@
                                 <thead>
                                     <tr>
                                         <th>#SL</th>
-                                        <th>Product Name</th>
                                         <th>Product Image</th>
+                                        <th>Product Name</th>
+                                        <th>Category Name</th>
                                         <th>Description</th>
                                         <th>Price</th>
                                         <th>Quantity</th>
@@ -56,11 +57,24 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                @foreach ( $products as $key=>$item )
+                                    @foreach ( $products as $key=>$item )
                                     <tr>
                                         <td>{{++$key}}</td>
+                                        <td>
+                                            @if (is_array($item->images))
+                                            @foreach ($item->images as $image)
+                                            <img src="{{ asset($image) }}" alt="Product Image" width="50">
+                                            @endforeach
+                                            @elseif (is_string($item->images))
+                                            @foreach (json_decode($item->images) as $image)
+                                            <img src="{{ asset($image) }}" alt="Product Image" width="50">
+                                            @endforeach
+                                            @else
+                                            No Image
+                                            @endif
+                                        </td>
                                         <td>{{$item->name}}</td>
-                                        <td>image</td>
+                                        <td>{{$item->category->name}}</td>
                                         <td>{{$item->description}}</td>
                                         <td>{{$item->price}}</td>
                                         <td>{{$item->quantity}}</td>

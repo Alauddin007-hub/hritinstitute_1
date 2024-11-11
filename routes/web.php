@@ -27,6 +27,8 @@ Route::get('/create', [AuthController::class, 'index'])->name('register.create')
 Route::post('/register', [AuthController::class, 'registration'])->name('registration');
 Route::get('/login', [AuthController::class, 'create'])->name('login.create');
 Route::post('/create/store', [AuthController::class, 'login'])->name('login');
+Route::get('/forget', [AuthController::class, 'forgot'])->name('forgot');
+Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 // Category Routes
 
@@ -40,7 +42,8 @@ Route::get('/category/{id}', [CategoryController::class, 'destroy'])->name('cate
 
 // Products Routes
 
-Route::get('/products', [ProductController::class, 'index'])->name('product');
+Route::get('/product', [ProductController::class, 'index'])->name('product.index');
+
 Route::get('/product/create', [ProductController::class, 'create'])->name('product.create');
 Route::post('/product/store', [ProductController::class, 'store'])->name('product.store');
 Route::get('/product/edit/{id}', [ProductController::class, 'edit'])->name('product.edit');
