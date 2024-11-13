@@ -61,7 +61,7 @@ class ProductController extends Controller
             'name' => $request->name,
             'category_id' => $request->category_id,
             'description' => $request->description,
-            'images' => $imagePaths,
+            'images' => json_encode($imagePaths),  // Convert images array to JSON string
             'price' => $request->price,
             'quantity' => $request->quantity,
             // 'vendor_id' => $request->vendor_id,
@@ -80,9 +80,9 @@ class ProductController extends Controller
 
     public function update(Request $request, $id)
     {
-        $data = $request->all();
-        dd($data);
-        
+        // $data = $request->all();
+        // dd($data);
+
         $product = Product::findOrFail($id);
 
         // Validate the request
@@ -94,25 +94,24 @@ class ProductController extends Controller
             'quantity' => 'required|integer',
         ]);
 
-        // Handle new image uploads if present
-        $imagePaths = $product->images; // Keep existing images
+        // Decode the images JSON to an array if it's stored as JSON
+        $imagePaths = json_decode($product->images, true) ?? []; // Default to an empty array if null
 
         if ($request->hasFile('images')) {
-            // Optional: Remove old images
+            // Optional: Remove old images from the server
             foreach ($imagePaths as $oldImage) {
                 if (file_exists(public_path($oldImage))) {
                     unlink(public_path($oldImage));
                 }
             }
 
-            $imagePaths = []; // Reset image paths array
+            $imagePaths = []; // Reset the image paths array
             foreach ($request->file('images') as $image) {
                 $imageName = time() . '_' . uniqid() . '.' . $image->extension();
                 $image->move(public_path('products'), $imageName);
                 $imagePaths[] = 'products/' . $imageName;
             }
         }
-
         // Update product data
         $product->update([
             'name' => $request->name,
@@ -127,22 +126,23 @@ class ProductController extends Controller
     }
 
     public function destroy(Request $request, $id)
-    {
-        // Find the product by ID
-        $product = Product::findOrFail($id);
+{
+    // Find the product by ID
+    $product = Product::findOrFail($id);
 
-        // Delete associated images
-        foreach (json_decode($product->images) as $imagePath) {
-            if (file_exists(public_path($imagePath))) {
-                unlink(public_path($imagePath));
-            }
+    // Delete associated images
+    foreach ($product->images as $imagePath) {
+        if (file_exists(public_path($imagePath))) {
+            unlink(public_path($imagePath));
         }
-
-        // Delete the product from the database
-        $product->delete();
-
-        return redirect()->route('product')->with('success', 'Product deleted successfully!');
     }
+
+    // Delete the product from the database
+    $product->delete();
+
+    return redirect()->route('product.index')->with('success', 'Product deleted successfully!');
+}
+
 
 
 
@@ -151,6 +151,6 @@ class ProductController extends Controller
         $products = Product::all();
         $cats = Category::all();
 
-        return view('admin.product.restockProduct', compact('products','cats'));
+        return view('admin.product.restockProduct', compact('products', 'cats'));
     }
 }

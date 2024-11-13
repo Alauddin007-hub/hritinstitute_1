@@ -42,7 +42,7 @@
                         </div>
                         @endif
                         <!-- form start -->
-                        <form method="post" action="{{route('product.store')}}" enctype="multipart/form-data">
+                        <form method="post" action="{{ route('product.update', $products->id) }}" enctype="multipart/form-data">
                             @csrf
                             <div class="card-body">
                                 <div class="form-group">
@@ -53,9 +53,17 @@
                                 <div class="form-group">
                                     <label>Current Images</label>
                                     <div>
-                                        @foreach (json_decode($products->images, true) as $image)
-                                        <img src="{{ asset($image) }}" alt="Product Image" width="50" style="margin-right: 5px;">
-                                        @endforeach
+                                    @if (is_array($products->images))
+                                            @foreach ($products->images as $image)
+                                            <img src="{{ asset($image) }}" alt="Product Image" width="50">
+                                            @endforeach
+                                            @elseif (is_string($products->images))
+                                            @foreach (json_decode($products->images) as $image)
+                                            <img src="{{ asset($image) }}" alt="Product Image" width="50">
+                                            @endforeach
+                                            @else
+                                            No Image
+                                            @endif
                                     </div>
                                 </div>
 
