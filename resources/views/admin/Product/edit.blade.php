@@ -49,32 +49,44 @@
                                     <label for="name">Produc Name</label>
                                     <input type="text" name="name" value="{{$products->name ? $products->name : old('name') }}" class="form-control">
                                 </div>
+                                <!-- Current Images -->
                                 <div class="form-group">
-                                    <label for="name">Produc Image</label>
-                                    <input type="file" name="images[]" multiple accept="image/*" class="form-control">
+                                    <label>Current Images</label>
+                                    <div>
+                                        @foreach (json_decode($products->images, true) as $image)
+                                        <img src="{{ asset($image) }}" alt="Product Image" width="50" style="margin-right: 5px;">
+                                        @endforeach
+                                    </div>
                                 </div>
+
+                                <!-- Upload New Images -->
                                 <div class="form-group">
-                                    <label for="name">Produc Price</label>
-                                    <input type="text" name="price" class="form-control">
+                                    <label for="images">Upload New Images</label>
+                                    <input type="file" name="images[]" class="form-control" multiple>
+                                    <small class="form-text text-muted">Upload new images to replace current images.</small>
                                 </div>
+                            </div>
+                            <!-- /.card-body -->
+                            <div class="form-group">
+                                <label for="name">Produc Price</label>
+                                <input type="number" name="price" class="form-control" value="{{ old('price', $products->price) }}" required>
                                 <div class="form-group">
                                     <label for="name">Produc Quantity</label>
-                                    <input type="text" name="quantity" class="form-control">
+                                    <input type="text" name="quantity" value="{{$products->quantity ? $products->quantity : old('quantity') }}" class="form-control">
                                 </div>
                                 <div class="form-group">
-                                    <label for="name">Category</label>
-                                    <select name="category_id" class="form-control">
-                                        
-                                        <option value="selected">Chosse once</option>
-                                        @foreach ($cats as $cat)
-                                        <option value="{{$cat->id}}" {{ old('category_id') == $cat->id ? 'selected' : '' }}>{{$cat->name}}</option>
+                                    <label for="category_id">Category</label>
+                                    <select name="category_id" class="form-control" required>
+                                        @foreach ($cats as $category)
+                                        <option value="{{ $category->id }}" {{ $products->category_id == $category->id ? 'selected' : '' }}>
+                                            {{ $category->name }}
+                                        </option>
                                         @endforeach
-
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     <label for="description">Description</label>
-                                    <textarea name="description" class="form-control"></textarea>
+                                    <textarea name="description" class="form-control">{{ old('description', $products->description) }}</textarea>
                                 </div>
                             </div>
                             <!-- /.card-body -->
@@ -85,7 +97,7 @@
                     </div>
                     <!-- /.card -->
                 </div>
-                
+
             </div>
             <!-- /.row -->
         </div><!-- /.container-fluid -->
