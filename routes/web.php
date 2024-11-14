@@ -30,6 +30,13 @@ Route::post('/create/store', [AuthController::class, 'login'])->name('login');
 Route::get('/forget', [AuthController::class, 'forgot'])->name('forgot');
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
+// Multi user
+// Route::group(['middleware' => 'Admin'], function () {
+//     Route::get('/categories', [CategoryController::class, 'index'])->name('category');
+//     Route::get('/category/create', [CategoryController::class, 'create'])->name('category.create');
+//     Route::post('/category/store', [CategoryController::class, 'store'])->name('category.store');
+// });
+
 // Category Routes
 
 Route::get('/categories', [CategoryController::class, 'index'])->name('category');

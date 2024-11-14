@@ -14,7 +14,7 @@ class Admin
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next): Response
+    public function handle(Request $request, Closure $next, string $role): Response
     {
      
         if(Auth::user()->usertype <> 'admin'){
@@ -24,5 +24,15 @@ class Admin
         }
 
         return $next($request);
+
+
+        // if(Auth::check())
+        // {
+        //     if('admin' == $role){
+
+        //     }
+        // }
+        // abort(401);
+
     }
 }
