@@ -14,9 +14,14 @@ Route::post("login", [AuthController::class, "login"]);
 
 Route::group([
     "middleware" => ["auth:api"]
-], function(){
+], function () {
 
     Route::get("profile", [AuthController::class, "profile"]);
     Route::get("refresh", [AuthController::class, "refreshToken"]);
     Route::get("logout", [AuthController::class, "logout"]);
+
+    Route::apiResource('categories', App\Http\Controllers\api\CategoryController::class);
+    Route::apiResource('products', App\Http\Controllers\api\ProductController::class);
+
+    
 });
