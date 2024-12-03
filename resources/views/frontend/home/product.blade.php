@@ -1,26 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>E-Commerce Home</title>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <link rel="stylesheet" href="{{ asset('css/styles.css') }}"> <!-- Add your CSS file -->
+    <link rel="stylesheet" href="{{ asset('assets/frontend/style.css') }}"> <!-- Add your CSS file -->
 </head>
-<body>
-    <header>
-        <h1>My E-Commerce Store</h1>
-        <nav>
-            <ul id="categories"></ul>
-        </nav>
-    </header>
 
-    <main>
-        <section>
-            <h2>Products</h2>
-            <div id="product-list" class="product-grid"></div>
-        </section>
-    </main>
+<body>
+    <div class="header">
+        <header class="container">
+            <h1>My E-Commerce Store</h1>
+            <nav>
+                <ul id="categories"></ul>
+            </nav>
+        </header>
+    </div>
+
+    <div class="main">
+        <main class="container">
+            <section class="product">
+                <h2>Products</h2>
+                <div id="product-list" class="product-grid"></div>
+            </section>
+        </main>
+    </div>
 
     <script>
         // Fetch categories
@@ -53,15 +59,25 @@
                     productList.innerHTML = ''; // Clear existing products
 
                     products.forEach(product => {
+                        let imagesArray;
+                        try {
+                            imagesArray = typeof product.images === 'string' ? JSON.parse(product.images) : product.images;
+                        } catch (error) {
+                            console.error('Error parsing product images:', error, product.images);
+                            imagesArray = [];
+                        }
+
+                        const imageSrc = imagesArray.length ? `/${imagesArray[0]}` : '/default-image.jpg';
+
                         const productCard = document.createElement('div');
                         productCard.className = 'product-card';
                         productCard.innerHTML = `
-                            <img src="/${JSON.parse(product.images)[0]}" alt="${product.name}">
-                            <h3>${product.name}</h3>
-                            <p>${product.description}</p>
-                            <strong>Price: $${product.price}</strong>
-                            <button data-id="${product.id}">Add to Cart</button>
-                        `;
+                    <img src="${imageSrc}" height="120" width="100" alt="${product.name}">
+                    <h3>${product.name}</h3>
+                    <p>${product.description}</p>
+                    <strong>Price: $${product.price}</strong>
+                    <button data-id="${product.id}">Add to Cart</button>
+                `;
                         productCard.querySelector('button').addEventListener('click', () => {
                             addToCart(product.id);
                         });
@@ -73,7 +89,9 @@
 
         // Add to cart
         function addToCart(productId) {
-            axios.post('/cart/add', { product_id: productId })
+            axios.post('/cart/add', {
+                    product_id: productId
+                })
                 .then(response => {
                     alert('Product added to cart!');
                 })
@@ -87,4 +105,5 @@
         fetchProductsByCategory();
     </script>
 </body>
+
 </html>

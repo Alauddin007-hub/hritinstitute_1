@@ -53,3 +53,10 @@ Route::middleware(['Admin'])->group(function () {
 });
 
 
+// Frontend
+
+// Home Page
+
+Route::get('/home', function() {
+    return view('frontend.home.product');
+})->name('home');

@@ -20,8 +20,9 @@ Route::group([
     Route::get("refresh", [AuthController::class, "refreshToken"]);
     Route::get("logout", [AuthController::class, "logout"]);
 
-    Route::apiResource('categories', App\Http\Controllers\api\CategoryController::class);
-    Route::apiResource('products', App\Http\Controllers\api\ProductController::class);
+    
 
     
 });
+Route::apiResource('categories', App\Http\Controllers\api\CategoryController::class);
+    Route::apiResource('products', App\Http\Controllers\api\ProductController::class);
